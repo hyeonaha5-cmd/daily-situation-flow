@@ -1,0 +1,1118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>토리의 생활 순서도</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
+<style>
+/* Layout: 모눈 공책 위의 생활 장면 — 왼쪽 장면, 가운데 순서도 작업판, 오른쪽 기호 팔레트 */
+:root {
+  --bg: #F2F1EC; --surface: #FFFFFF; --surface-2: #E9E8E1; --ink: #23283A; --ink-soft: #5E6475; --line: #D4D2C8;
+  --accent: #3D6FE0; --accent-ink: #FFFFFF;
+  --c-term: #7B5BD6; --c-proc: #2F7FD8; --c-rep: #1A9465; --c-dec: #D99A12;
+  --ok: #1A9465; --bad: #D33E35; --run: #3D6FE0; --warm: #E8743B; --leaf: #3FA35B; --water: #4AA3E8; --soil: #9A6A43;
+  --grid-dot: rgba(35, 40, 58, .07);
+  --f-display: "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --f-body: "Gowun Dodum", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #15171E; --surface: #1E212B; --surface-2: #272B37; --ink: #E9EAF0; --ink-soft: #A3A8B8; --line: #383D4C;
+  --accent: #6E95F5; --accent-ink: #10131C;
+  --c-term: #A58FF2; --c-proc: #63A8F2; --c-rep: #3CC48C; --c-dec: #F2BE45;
+  --ok: #3CC48C; --bad: #FF6A5F; --run: #6E95F5; --warm: #F28B55; --leaf: #5CC277; --water: #6BB8F2; --soil: #B48358;
+  --grid-dot: rgba(233, 234, 240, .05);
+  color-scheme: dark;
+} }
+:root[data-theme="dark"] {
+  --bg: #15171E; --surface: #1E212B; --surface-2: #272B37; --ink: #E9EAF0; --ink-soft: #A3A8B8; --line: #383D4C;
+  --accent: #6E95F5; --accent-ink: #10131C;
+  --c-term: #A58FF2; --c-proc: #63A8F2; --c-rep: #3CC48C; --c-dec: #F2BE45;
+  --ok: #3CC48C; --bad: #FF6A5F; --run: #6E95F5; --warm: #F28B55; --leaf: #5CC277; --water: #6BB8F2; --soil: #B48358;
+  --grid-dot: rgba(233, 234, 240, .05);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.6;
+  background-image: radial-gradient(var(--grid-dot) 1.2px, transparent 1.2px); background-size: 22px 22px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 40px;
+}
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; line-height: 1.25; text-wrap: balance; margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible, .slot:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1320px; margin: 0 auto; }
+
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--f-display); font-size: 22px; }
+.brand svg { width: 34px; height: 34px; }
+.top-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.btn { border: 2px solid var(--line); background: var(--surface); border-radius: 999px; padding: 8px 16px; font-size: 15px; display: inline-flex; align-items: center; gap: 6px; transition: transform .1s, background .15s; }
+.btn:hover { background: var(--surface-2); }
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-family: var(--f-display); font-size: 18px; padding: 10px 22px; }
+.btn.primary:hover { filter: brightness(1.06); background: var(--accent); }
+.btn.small { padding: 5px 12px; font-size: 14px; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+
+.panel { background: var(--surface); border: 2px solid var(--line); border-radius: var(--radius); padding: 18px; min-width: 0; }
+.eyebrow { font-family: var(--f-display); font-size: 14px; letter-spacing: .06em; color: var(--ink-soft); }
+
+/* 인트로 */
+.hero { display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; align-items: center; padding-block: 20px 10px; }
+.hero h1 { font-size: clamp(34px, 6vw, 56px); }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero p { font-size: 18px; max-width: 34em; color: var(--ink-soft); }
+.hero-list { display: grid; gap: 8px; }
+.hero-list .row { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 2px solid var(--line); border-radius: 12px; padding: 8px 12px; }
+.hero-list .row svg { width: 40px; height: 40px; flex: none; }
+.hero-list .row b { font-family: var(--f-display); font-weight: 400; font-size: 17px; }
+.hero-list .row span { font-size: 13px; color: var(--ink-soft); margin-left: auto; }
+.section { margin-top: 34px; }
+.section > h2 { font-size: 28px; margin-bottom: 6px; }
+.section > p.lead { color: var(--ink-soft); margin: 0 0 16px; max-width: 46em; }
+.symbol-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.symbol-card { display: flex; flex-direction: column; gap: 8px; }
+.symbol-card .demo { height: 92px; display: grid; place-items: center; background: var(--surface-2); border-radius: 10px; }
+.symbol-card h3 { font-size: 22px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.symbol-card h3 small { font-family: var(--f-body); font-size: 14px; color: var(--ink-soft); }
+.symbol-card p { margin: 0; }
+.symbol-card .ex { font-size: 14px; color: var(--ink-soft); }
+.symbol-card .when { font-size: 13px; font-family: var(--f-display); color: var(--accent); }
+.start-row { display: flex; justify-content: center; margin-top: 30px; }
+
+/* 상황 지도 */
+.map-head { display: flex; justify-content: space-between; align-items: end; gap: 12px; flex-wrap: wrap; margin-block: 10px 18px; }
+.map-head h1 { font-size: 34px; }
+.legend { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip-tag { font-family: var(--f-display); font-size: 13px; padding: 3px 12px; border-radius: 999px; }
+.tag-seq { background: color-mix(in srgb, var(--c-proc) 18%, var(--surface)); color: var(--c-proc); }
+.tag-rep { background: color-mix(in srgb, var(--c-rep) 18%, var(--surface)); color: var(--c-rep); }
+.tag-dec { background: color-mix(in srgb, var(--c-dec) 22%, var(--surface)); color: color-mix(in srgb, var(--c-dec) 70%, var(--ink)); }
+.tag-all { background: color-mix(in srgb, var(--warm) 18%, var(--surface)); color: var(--warm); }
+.stage-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.stage-tile { text-align: left; border: 2px solid var(--line); background: var(--surface); border-radius: var(--radius); padding: 14px; display: flex; flex-direction: column; gap: 8px; min-height: 210px; position: relative; transition: transform .12s, border-color .15s; }
+.stage-tile:hover:not([disabled]) { transform: translateY(-2px); border-color: var(--accent); }
+.stage-tile .art { width: 64px; height: 64px; }
+.stage-tile .num { font-family: var(--f-display); font-size: 15px; color: var(--ink-soft); }
+.stage-tile .name { font-family: var(--f-display); font-size: 21px; line-height: 1.2; }
+.stage-tile .stars { margin-top: auto; display: flex; gap: 2px; }
+.stage-tile[disabled] { opacity: .55; cursor: not-allowed; }
+.stage-tile .lock { position: absolute; top: 12px; right: 12px; width: 22px; height: 22px; color: var(--ink-soft); }
+.stage-tile.done { border-color: color-mix(in srgb, var(--ok) 60%, var(--line)); }
+.star { width: 20px; height: 20px; }
+.star path { fill: var(--line); }
+.star.on path { fill: var(--c-dec); }
+.map-foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 20px; align-items: center; color: var(--ink-soft); font-size: 14px; }
+
+/* 플레이 */
+.play-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-block: 4px 14px; }
+.play-head h1 { font-size: 28px; }
+.play-head .meta { margin-left: auto; font-size: 14px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.play { display: grid; gap: 16px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) 250px; grid-template-areas: "scene flow palette"; align-items: start; }
+.p-scene { grid-area: scene; display: flex; flex-direction: column; gap: 12px; }
+.p-flow { grid-area: flow; }
+.p-palette { grid-area: palette; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); }
+@media (max-width: 1100px) {
+  .play { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); grid-template-areas: "scene flow" "palette flow"; }
+  .p-palette { position: static; }
+}
+@media (max-width: 760px) {
+  .play { grid-template-columns: minmax(0, 1fr); grid-template-areas: "scene" "palette" "flow"; }
+  .hero { grid-template-columns: 1fr; }
+  .stage-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.story { margin: 0; }
+.goal { font-size: 14px; color: var(--ink-soft); margin: 4px 0 0; }
+.variant-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.variant-tabs button { border: 2px solid var(--line); background: var(--surface); border-radius: 999px; padding: 3px 14px; font-family: var(--f-display); font-size: 14px; }
+.variant-tabs button[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.speed { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--ink-soft); margin-left: auto; }
+.speed input { width: 90px; accent-color: var(--accent); }
+.say { display: flex; gap: 10px; align-items: flex-start; }
+.say svg { width: 38px; height: 38px; flex: none; }
+.bubble { background: var(--surface-2); border-radius: 4px 14px 14px 14px; padding: 10px 14px; flex: 1; min-width: 0; }
+.bubble.ok { background: color-mix(in srgb, var(--ok) 16%, var(--surface)); }
+.bubble.bad { background: color-mix(in srgb, var(--bad) 13%, var(--surface)); }
+.hint-box h3, .teacher-box h3 { font-size: 18px; }
+.teacher-box { border-color: var(--c-term); }
+.ans { display: grid; gap: 3px; font-size: 15px; }
+.ans .a { display: flex; align-items: center; gap: 8px; }
+.ans .a i { font-style: normal; font-family: var(--f-display); font-size: 12px; padding: 0 8px; border-radius: 999px; flex: none; }
+.ans .k-terminal i { background: color-mix(in srgb, var(--c-term) 18%, var(--surface)); color: var(--c-term); }
+.ans .k-process i { background: color-mix(in srgb, var(--c-proc) 16%, var(--surface)); color: var(--c-proc); }
+.ans .k-repeat i { background: color-mix(in srgb, var(--c-rep) 18%, var(--surface)); color: var(--c-rep); }
+.ans .k-decision i { background: color-mix(in srgb, var(--c-dec) 22%, var(--surface)); color: color-mix(in srgb, var(--c-dec) 70%, var(--ink)); }
+.ans .k-yes, .ans .k-no { font-family: var(--f-display); font-size: 13px; }
+.ans .k-yes { color: var(--ok); } .ans .k-no { color: var(--bad); }
+.hint-box ol { margin: 8px 0 0; padding-left: 22px; display: grid; gap: 6px; }
+.hint-box li { font-size: 15px; }
+.hint-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+
+/* 장면 */
+.scene { background: var(--surface-2); border-radius: 12px; padding: 14px; min-height: 220px; display: flex; flex-direction: column; gap: 12px; }
+.scene-cap { font-family: var(--f-display); font-size: 15px; color: var(--ink-soft); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(88px, 1fr)); gap: 8px; }
+.tile { background: var(--surface); border: 2px solid var(--line); border-radius: 12px; padding: 8px 6px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; font-size: 13px; line-height: 1.3; transition: border-color .2s, background .2s; }
+.tile svg { width: 46px; height: 46px; }
+.tile.on { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 10%, var(--surface)); }
+.tile.off { opacity: .5; }
+.tile .st { font-family: var(--f-display); font-size: 12px; color: var(--ink-soft); }
+.tile.on .st { color: var(--ok); }
+.pop { animation: pop .45s ease; }
+@keyframes pop { 40% { transform: scale(1.12); } }
+.shake { animation: shake .45s ease; }
+@keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+.pots { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 4px; align-items: end; }
+.pot { display: flex; flex-direction: column; align-items: center; gap: 2px; position: relative; padding-top: 30px; }
+.pot svg.p { width: 100%; max-width: 44px; height: auto; }
+.pot .n { font-size: 11px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.pot .me { position: absolute; top: 0; width: 28px; height: 28px; transition: none; }
+.shelf-end { font-size: 12px; color: var(--ink-soft); text-align: right; }
+.window { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 2px solid var(--line); border-radius: 12px; padding: 8px 12px; }
+.window svg { width: 52px; height: 52px; flex: none; }
+.window b { font-family: var(--f-display); font-weight: 400; font-size: 18px; }
+.sheet { background: var(--surface); border: 2px solid var(--line); border-radius: 12px; padding: 10px 12px; display: grid; gap: 2px; }
+.sheet .ln { display: grid; grid-template-columns: 28px 1fr 34px; align-items: center; gap: 6px; padding: 3px 6px; border-radius: 8px; font-size: 17px; }
+.sheet .ln .no { font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.sheet .ln.cur { background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
+.sheet .ln svg { width: 28px; height: 28px; }
+.sheet .score { text-align: right; font-family: var(--f-display); font-size: 18px; color: var(--bad); border-top: 1.5px dashed var(--line); padding-top: 6px; margin-top: 4px; }
+.basket { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; background: var(--surface); border: 2px solid var(--line); border-radius: 12px; padding: 8px 10px; min-height: 48px; }
+.basket .lbl { font-family: var(--f-display); font-size: 14px; color: var(--ink-soft); margin-right: 4px; }
+.item { font-size: 13px; padding: 3px 10px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--surface-2); }
+.item.hand { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--surface)); font-size: 15px; }
+.bins { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.bin { border-radius: 12px; padding: 8px; border: 2px solid; min-height: 92px; display: flex; flex-direction: column; gap: 4px; background: var(--surface); }
+.bin h4 { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: 14px; }
+.bin .item { font-size: 12px; padding: 1px 8px; align-self: flex-start; }
+.bin.plastic { border-color: var(--water); }
+.bin.paper { border-color: var(--soil); }
+.bin.trash { border-color: var(--ink-soft); }
+
+/* 순서도 */
+.flow-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.flow-head h2 { font-size: 22px; }
+.flow-head .count { font-size: 14px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.flow-head .count.over { color: var(--bad); font-weight: 700; }
+.flow-head .spacer { flex: 1; }
+.flow-canvas { overflow-x: auto; padding: 8px 4px 16px; background-image: linear-gradient(var(--grid-dot) 1px, transparent 1px), linear-gradient(90deg, var(--grid-dot) 1px, transparent 1px); background-size: 22px 22px; border-radius: 10px; min-height: 380px; }
+.flist { display: flex; flex-direction: column; align-items: center; min-width: max-content; margin: 0 auto; }
+.node { display: flex; flex-direction: column; align-items: center; }
+.node-row { display: flex; align-items: center; gap: 6px; position: relative; }
+.shape { position: relative; display: grid; place-items: center; flex: none; }
+.shape svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.shape svg .s { stroke-width: 2.5; }
+.node.terminal > .node-row .s, .node.terminal > svg .s, svg.ic.terminal .s { fill: color-mix(in srgb, var(--c-term) 15%, var(--surface)); stroke: var(--c-term); }
+.node.process > .node-row .s, .node.process > svg .s, svg.ic.process .s { fill: color-mix(in srgb, var(--c-proc) 13%, var(--surface)); stroke: var(--c-proc); }
+.node.repeat > .node-row .s, .node.repeat > svg .s, svg.ic.repeat .s { fill: color-mix(in srgb, var(--c-rep) 14%, var(--surface)); stroke: var(--c-rep); }
+.node.decision > .node-row .s, .node.decision > svg .s, svg.ic.decision .s { fill: color-mix(in srgb, var(--c-dec) 17%, var(--surface)); stroke: var(--c-dec); }
+svg.ic .s, .node > svg .s { stroke-width: 2.5; }
+.node.running > .node-row .shape .s { stroke: var(--run); stroke-width: 5; }
+.node.error > .node-row .shape .s { stroke: var(--bad); stroke-width: 5; stroke-dasharray: 7 4; }
+.shape input { position: relative; z-index: 1; border: 0; background: transparent; text-align: center; font: inherit; font-size: 14px; color: var(--ink); width: 80%; padding: 4px 2px; border-radius: 6px; }
+.node.decision .shape input { width: 64%; font-size: 13.5px; }
+.shape input::placeholder { color: color-mix(in srgb, var(--ink-soft) 70%, transparent); }
+.shape input:focus { background: color-mix(in srgb, var(--surface) 70%, transparent); outline: 2px solid var(--accent); }
+.tools { display: flex; flex-direction: column; gap: 2px; }
+.tools button { width: 26px; height: 22px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); font-size: 12px; line-height: 1; padding: 0; color: var(--ink-soft); }
+.tools button:hover { color: var(--ink); background: var(--surface-2); }
+.tools button.del:hover { color: var(--bad); border-color: var(--bad); }
+.tools-spacer { width: 26px; }
+.slot { border: 0; background: transparent; display: flex; flex-direction: column; align-items: center; padding: 0; min-width: 120px; color: var(--ink-soft); }
+.slot .ln { width: 2.5px; height: 14px; background: var(--ink-soft); }
+.slot .ah { width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 9px solid var(--ink-soft); }
+.slot .add { font-size: 12px; font-family: var(--f-display); border: 1.5px dashed var(--line); border-radius: 999px; padding: 0 10px; margin: 2px 0; opacity: 0; transition: opacity .15s; white-space: nowrap; }
+.slot:hover .add, .slot:focus-visible .add { opacity: 1; }
+.slot.edge .ln, .slot.edge .ah { display: none; }
+.slot.edge .add { opacity: .75; }
+.slot.active .add { opacity: 1; background: var(--accent); color: var(--accent-ink); border: 1.5px solid var(--accent); }
+.slot.big .add { font-size: 16px; padding: 18px 26px; border-radius: 14px; opacity: 1; }
+.loop { border: 2.5px dashed var(--c-rep); border-radius: 14px; padding: 18px 12px 10px; margin-top: 6px; position: relative; min-width: 200px; }
+.loop-label { position: absolute; top: -12px; left: 12px; background: var(--bg); color: var(--c-rep); font-family: var(--f-display); font-size: 13px; padding: 0 8px; border-radius: 6px; }
+.branches { display: flex; gap: 12px; margin-top: 6px; align-items: stretch; }
+.branch { border: 2.5px dashed var(--c-dec); border-radius: 14px; padding: 18px 6px 10px; position: relative; min-width: 150px; display: flex; flex-direction: column; align-items: center; }
+.branch-label { position: absolute; top: -12px; left: 12px; font-family: var(--f-display); font-size: 13px; padding: 0 8px; border-radius: 6px; color: #fff; }
+.branch.yes .branch-label { background: var(--ok); }
+.branch.no .branch-label { background: var(--bad); }
+
+/* 팔레트 */
+.p-palette h2 { font-size: 20px; margin-bottom: 4px; }
+.p-palette .sub { font-size: 13px; color: var(--ink-soft); margin: 0 0 10px; }
+.pal-list { display: grid; gap: 8px; }
+.pal-btn { display: flex; align-items: center; gap: 10px; border: 2px solid var(--line); background: var(--surface); border-radius: 12px; padding: 8px 10px; text-align: left; transition: border-color .15s, transform .1s; }
+.pal-btn:hover:not([disabled]) { border-color: var(--accent); }
+.pal-btn:active:not([disabled]) { transform: scale(.98); }
+.pal-btn svg.ic { width: 64px; height: 34px; flex: none; }
+.pal-btn .t { display: flex; flex-direction: column; line-height: 1.25; }
+.pal-btn .t b { font-family: var(--f-display); font-weight: 400; font-size: 17px; }
+.pal-btn .t span { font-size: 12px; color: var(--ink-soft); }
+.pal-btn[disabled] { opacity: .5; cursor: not-allowed; }
+.pal-btn.new { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent); }
+.helper { margin-top: 16px; border-top: 2px dashed var(--line); padding-top: 12px; }
+.helper h3 { font-size: 16px; }
+.helper p { font-size: 13px; color: var(--ink-soft); margin: 2px 0 8px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips button { border: 1.5px solid var(--line); background: var(--surface-2); border-radius: 999px; padding: 3px 10px; font-size: 13px; }
+.chips button:hover { border-color: var(--accent); }
+
+/* 모달 */
+.modal { position: fixed; inset: 0; background: rgba(12, 14, 22, .55); display: grid; place-items: center; z-index: 50;
+  padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); }
+.modal-card { background: var(--surface); color: var(--ink); border-radius: 18px; padding: 24px; width: min(620px, 100%); max-height: 100%; overflow: auto; border: 2px solid var(--line); }
+.modal-card h2 { font-size: 28px; margin-bottom: 10px; }
+.modal-card p { margin: 0 0 10px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; margin-top: 16px; }
+.big-stars { display: flex; gap: 8px; justify-content: center; margin: 6px 0 14px; }
+.big-stars .star { width: 52px; height: 52px; }
+.gift { display: flex; gap: 16px; align-items: center; background: var(--surface-2); border-radius: 12px; padding: 14px; margin: 12px 0; flex-wrap: wrap; }
+.gift .demo { flex: none; }
+.gift p { margin: 0; flex: 1 1 200px; }
+.longlist { font-size: 14px; background: var(--surface-2); border-radius: 10px; padding: 10px 14px; color: var(--ink-soft); }
+.toast { position: fixed; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); transform: translateX(-50%); background: var(--ink); color: var(--surface); padding: 10px 18px; border-radius: 999px; font-size: 15px; z-index: 60; max-width: calc(100% - 32px); text-align: center; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="14" fill="var(--warm)"/><circle cx="25" cy="15" r="3.2" fill="#fff"/><circle cx="26" cy="15" r="1.6" fill="#23283A"/><circle cx="25" cy="25" r="3.2" fill="#fff"/><circle cx="26" cy="25" r="1.6" fill="#23283A"/><path d="M33 16 L39 20 L33 24 Z" fill="var(--warm)"/></svg>
+      토리의 생활 순서도
+    </div>
+    <nav class="top-actions">
+      <button class="btn small" id="nav-intro" type="button">순서도 기호 배우기</button>
+      <button class="btn small" id="nav-map" type="button">상황 고르기</button>
+    </nav>
+  </header>
+
+  <main id="screen-intro">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">시작하기 전에</div>
+        <h1>토리의 하루를<br><em>순서도</em>로 그려요</h1>
+        <p>양치하기, 화분에 물 주기, 외출 준비, 받아쓰기 채점, 분리수거. 매일 하는 일도 순서도로 나타낼 수 있어요. 여러분이 그린 순서도대로 토리가 움직여요.</p>
+      </div>
+      <div class="hero-list" id="hero-list"></div>
+    </section>
+    <section class="section">
+      <h2>순서도 기호</h2>
+      <p class="lead">순서도는 일을 하는 차례를 약속된 기호와 화살표로 나타낸 그림이에요. 기호마다 모양과 쓰임이 정해져 있어요. 반복과 판단 기호는 상황을 풀다가 필요해지면 얻게 돼요.</p>
+      <div class="symbol-grid" id="symbol-grid"></div>
+    </section>
+    <section class="section">
+      <h2>세 가지 흐름</h2>
+      <p class="lead"><b>순차</b>는 차례대로 한 번씩, <b>반복</b>은 같은 일을 여러 번, <b>선택</b>은 상황에 따라 다른 일을 해요. 다섯 가지 상황을 풀면서 하나씩 만나요.</p>
+    </section>
+    <div class="start-row"><button class="btn primary" id="go-map" type="button">상황 고르러 가기 →</button></div>
+  </main>
+
+  <main id="screen-map" hidden>
+    <div class="map-head">
+      <div>
+        <div class="eyebrow">토리의 하루</div>
+        <h1>다섯 가지 상황을 순서도로</h1>
+      </div>
+      <div class="legend">
+        <span class="chip-tag tag-seq">순차</span><span class="chip-tag tag-rep">반복</span><span class="chip-tag tag-dec">선택</span><span class="chip-tag tag-all">종합</span>
+      </div>
+    </div>
+    <div class="stage-grid" id="stage-grid"></div>
+    <div class="map-foot">
+      <span id="star-total"></span>
+      <span style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn small" id="teacher" type="button">선생님: 모든 상황 열기</button>
+        <button class="btn small" id="reset" type="button">기록 지우기</button>
+      </span>
+    </div>
+  </main>
+
+  <main id="screen-play" hidden>
+    <div class="play-head">
+      <button class="btn small" id="back-map" type="button">← 상황 고르기</button>
+      <span class="chip-tag" id="play-tag"></span>
+      <h1 id="play-title"></h1>
+      <span class="meta" id="attempts"></span>
+    </div>
+    <div class="play">
+      <section class="p-scene">
+        <div class="panel">
+          <p class="story" id="story"></p>
+          <p class="goal" id="goal"></p>
+        </div>
+        <div class="panel" style="display:flex;flex-direction:column;gap:12px">
+          <div class="variant-tabs" id="variant-tabs"></div>
+          <div class="scene" id="scene"></div>
+          <div class="controls">
+            <button class="btn primary" id="run" type="button">▶ 실행</button>
+            <button class="btn" id="stop" type="button" disabled>■ 멈춤</button>
+            <button class="btn" id="reset-scene" type="button">↺ 처음으로</button>
+            <label class="speed" for="speed">빠르기 <input type="range" id="speed" min="1" max="3" step="1" value="2"></label>
+          </div>
+          <div class="say">
+            <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="14" fill="var(--warm)"/><circle cx="25" cy="15" r="3.2" fill="#fff"/><circle cx="26" cy="15" r="1.6" fill="#23283A"/><circle cx="25" cy="25" r="3.2" fill="#fff"/><circle cx="26" cy="25" r="1.6" fill="#23283A"/><path d="M33 16 L39 20 L33 24 Z" fill="var(--warm)"/></svg>
+            <div class="bubble" id="say" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+        <div class="panel hint-box">
+          <h3>힌트</h3>
+          <div id="hint-intro" style="font-size:14px;color:var(--ink-soft)"></div>
+          <ol id="hint-list"></ol>
+          <div class="hint-row">
+            <button class="btn small" id="hint-more" type="button">힌트 하나 더 보기</button>
+            <button class="btn small" id="show-answer" type="button" hidden>모범 답안 불러오기</button>
+          </div>
+        </div>
+        <div class="panel teacher-box" id="teacher-box" hidden>
+          <h3>선생님용 모범 답안</h3>
+          <p style="margin:2px 0 8px;font-size:13px;color:var(--ink-soft)">선생님 모드에서만 보여요. 순서가 조금 달라도 실행해서 모두 성공하면 정답이에요.</p>
+          <div id="teacher-ans" class="ans"></div>
+        </div>
+      </section>
+
+      <section class="panel p-flow">
+        <div class="flow-head">
+          <h2>내 순서도</h2>
+          <span class="count" id="count"></span>
+          <span class="spacer"></span>
+          <button class="btn small" id="clear" type="button">모두 지우기</button>
+        </div>
+        <div class="flow-canvas" id="flow"></div>
+      </section>
+
+      <aside class="panel p-palette">
+        <h2>순서도 기호</h2>
+        <p class="sub">기호를 누르면 파란색 <b>“여기에 넣어요”</b> 자리에 나타나요. 화살표 사이를 누르면 넣을 자리를 바꿀 수 있어요.</p>
+        <div class="pal-list" id="palette"></div>
+        <div class="helper">
+          <h3>입력 도우미</h3>
+          <p id="helper-sub"></p>
+          <div class="chips" id="chips"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+
+<div class="modal" id="modal" hidden><div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title" id="modal-card"></div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(() => {
+'use strict';
+
+/* ---------- 그림 ---------- */
+const TORI = '<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="14" fill="var(--warm)" stroke="var(--ink)" stroke-width="1.5"/><circle cx="25" cy="15" r="3.2" fill="#fff"/><circle cx="26" cy="15" r="1.6" fill="#23283A"/><circle cx="25" cy="25" r="3.2" fill="#fff"/><circle cx="26" cy="25" r="1.6" fill="#23283A"/></svg>';
+const I = {
+  brush: on => `<svg viewBox="0 0 48 48"><rect x="4" y="27" width="30" height="6" rx="3" fill="var(--c-proc)"/><rect x="29" y="20" width="14" height="8" rx="2" fill="var(--surface)" stroke="var(--ink)" stroke-width="1.5"/><path d="M31 20 V16 M34 20 V15 M37 20 V15 M40 20 V16" stroke="var(--ink-soft)" stroke-width="1.5"/>${on ? '<path d="M30 15 q6 -9 13 0 z" fill="var(--c-rep)" stroke="var(--ink)" stroke-width="1"/>' : ''}</svg>`,
+  tooth: on => `<svg viewBox="0 0 48 48"><path d="M13 9 q11 -6 22 0 q5 9 -1 17 l-3 14 q-2 4 -4 -1 l-2 -8 l-2 8 q-2 5 -4 1 l-3 -14 q-6 -8 -3 -17z" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>${on ? '<path d="M38 6 l1.5 4 4 1.5 -4 1.5 -1.5 4 -1.5 -4 -4 -1.5 4 -1.5z" fill="var(--c-dec)"/><path d="M8 4 l1 2.5 2.5 1 -2.5 1 -1 2.5 -1 -2.5 -2.5 -1 2.5 -1z" fill="var(--c-dec)"/>' : '<circle cx="20" cy="15" r="2" fill="var(--c-dec)" opacity=".6"/><circle cx="28" cy="18" r="1.6" fill="var(--c-dec)" opacity=".6"/>'}</svg>`,
+  cup: on => `<svg viewBox="0 0 48 48">${on ? '<path d="M14.5 20 h19 l-2.2 19 h-14.6z" fill="var(--water)" opacity=".75"/>' : ''}<path d="M12 9 h24 l-3.4 31 h-17.2z" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linejoin="round"/></svg>`,
+  mouth: on => `<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="17" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/><path d="M15 27 q9 8 18 0" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round"/><circle cx="18" cy="19" r="2" fill="var(--ink)"/><circle cx="30" cy="19" r="2" fill="var(--ink)"/>${on ? '<path d="M38 30 q3 5 0 8 q-3 -3 0 -8z M42 22 q2 4 0 6 q-2 -2 0 -6z" fill="var(--water)"/>' : ''}</svg>`,
+  can: on => `<svg viewBox="0 0 48 48"><path d="M10 18 h20 v20 a3 3 0 0 1 -3 3 h-14 a3 3 0 0 1 -3 -3z" fill="${on ? 'var(--water)' : 'var(--surface)'}" stroke="var(--ink)" stroke-width="2"/><path d="M30 24 L42 14" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/><path d="M14 18 q6 -10 12 0" fill="none" stroke="var(--ink)" stroke-width="2"/></svg>`,
+  pot: on => `<svg class="p" viewBox="0 0 40 56"><path d="M20 30 V14" stroke="var(--leaf)" stroke-width="2.5"/>${on ? '<path d="M20 18 q-12 -4 -12 -14 q10 0 12 14z M20 22 q12 -4 12 -14 q-10 0 -12 14z" fill="var(--leaf)"/>' : '<path d="M20 20 q-9 2 -11 10 q8 -1 11 -8z M20 20 q8 3 9 10 q-7 -2 -9 -8z" fill="color-mix(in srgb, var(--leaf) 50%, var(--soil))"/>'}<path d="M7 30 h26 l-3 22 h-20z" fill="var(--soil)"/>${on ? '<circle cx="20" cy="41" r="3" fill="var(--water)"/>' : ''}</svg>`,
+  sun: `<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="9" fill="var(--c-dec)"/><g stroke="var(--c-dec)" stroke-width="3" stroke-linecap="round"><path d="M24 5v6M24 37v6M5 24h6M37 24h6M10.5 10.5l4 4M33.5 33.5l4 4M37.5 10.5l-4 4M14.5 33.5l-4 4"/></g></svg>`,
+  rain: `<svg viewBox="0 0 48 48"><path d="M13 28 a8 8 0 0 1 1 -16 a10 10 0 0 1 19 3 a7 7 0 0 1 1 13z" fill="var(--ink-soft)"/><g stroke="var(--water)" stroke-width="3" stroke-linecap="round"><path d="M16 33l-2 6M25 33l-2 6M34 33l-2 6"/></g></svg>`,
+  bag: on => `<svg viewBox="0 0 48 48"><rect x="10" y="14" width="28" height="28" rx="6" fill="${on ? 'var(--c-proc)' : 'var(--surface)'}" stroke="var(--ink)" stroke-width="2"/><path d="M18 14 v-4 a6 6 0 0 1 12 0 v4" fill="none" stroke="var(--ink)" stroke-width="2"/><rect x="16" y="26" width="16" height="8" rx="2" fill="none" stroke="var(--ink)" stroke-width="1.6"/></svg>`,
+  shoes: on => `<svg viewBox="0 0 48 48"><path d="M5 30 v-10 h10 q2 6 10 7 l14 2 q5 1 5 6 v3 h-39z" fill="${on ? 'var(--warm)' : 'var(--surface)'}" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/><path d="M5 34 h39" stroke="var(--ink)" stroke-width="2"/></svg>`,
+  umbrella: on => `<svg viewBox="0 0 48 48"><path d="M5 24 a19 17 0 0 1 38 0 z" fill="${on ? 'var(--c-term)' : 'var(--surface)'}" stroke="var(--ink)" stroke-width="2"/><path d="M24 24 v14 a4 4 0 0 1 -8 0" fill="none" stroke="var(--ink)" stroke-width="2.4"/></svg>`,
+  hat: on => `<svg viewBox="0 0 48 48"><path d="M11 30 a13 13 0 0 1 26 0z" fill="${on ? 'var(--c-dec)' : 'var(--surface)'}" stroke="var(--ink)" stroke-width="2"/><path d="M4 31 h40 q0 4 -6 4 h-28 q-6 0 -6 -4z" fill="${on ? 'var(--c-dec)' : 'var(--surface)'}" stroke="var(--ink)" stroke-width="2"/></svg>`,
+  door: on => `<svg viewBox="0 0 48 48"><rect x="11" y="5" width="26" height="38" rx="2" fill="${on ? 'var(--surface)' : 'var(--soil)'}" stroke="var(--ink)" stroke-width="2"/>${on ? '<path d="M11 5 L27 9 V47 L11 43z" fill="var(--soil)" stroke="var(--ink)" stroke-width="2"/>' : '<circle cx="31" cy="25" r="2" fill="var(--ink)"/>'}</svg>`,
+  gloves: on => `<svg viewBox="0 0 48 48"><path d="M14 44 v-14 l-6 -8 q-2 -3 1 -4 l7 6 v-14 q0 -3 3 -3 q3 0 3 3 v-2 q0 -3 3 -3 q3 0 3 3 v2 q0 -3 3 -3 q3 0 3 3 v18 q0 8 -6 12 v4z" fill="${on ? 'var(--c-dec)' : 'var(--surface)'}" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/></svg>`,
+  hands: on => `<svg viewBox="0 0 48 48"><path d="M10 40 v-12 q0 -6 5 -9 l8 -5 q3 -1 3 2 l-5 6 h14 q3 0 3 3 q0 3 -3 3 h-6" fill="var(--surface)" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/>${on ? '<circle cx="34" cy="10" r="3" fill="none" stroke="var(--water)" stroke-width="2"/><circle cx="41" cy="18" r="2.2" fill="none" stroke="var(--water)" stroke-width="2"/><circle cx="27" cy="7" r="2" fill="none" stroke="var(--water)" stroke-width="2"/>' : ''}</svg>`,
+  ring: '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11" fill="none" stroke="var(--bad)" stroke-width="3"/></svg>',
+  slash: '<svg viewBox="0 0 32 32"><path d="M7 27 L25 5" stroke="var(--bad)" stroke-width="3.4" stroke-linecap="round"/></svg>',
+  sheet: '<svg viewBox="0 0 48 48"><rect x="9" y="5" width="30" height="38" rx="3" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/><path d="M15 15h18M15 22h18M15 29h12" stroke="var(--ink-soft)" stroke-width="2"/><circle cx="31" cy="33" r="6" fill="none" stroke="var(--bad)" stroke-width="2.4"/></svg>',
+  bin: '<svg viewBox="0 0 48 48"><path d="M10 14 h28 l-3 28 h-22z" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/><path d="M7 14 h34" stroke="var(--ink)" stroke-width="2.4"/><path d="M18 22 l1 14 M24 22 v14 M30 22 l-1 14" stroke="var(--water)" stroke-width="2"/><path d="M19 14 v-4 h10 v4" fill="none" stroke="var(--ink)" stroke-width="2"/></svg>',
+};
+const PADLOCK = '<svg class="lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="12" rx="2.5" fill="currentColor"/><path d="M8 10 V7 a4 4 0 0 1 8 0 V10" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>';
+const STAR = on => `<svg class="star${on ? ' on' : ''}" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2 6.1 20.4l1.3-6.5L2.5 9.3l6.6-.8z"/></svg>`;
+const SHAPES = {
+  terminal: { w: 160, h: 46, d: '<rect class="s" x="1.5" y="1.5" width="157" height="43" rx="21.5"/>' },
+  process:  { w: 196, h: 48, d: '<rect class="s" x="1.5" y="1.5" width="193" height="45" rx="4"/>' },
+  repeat:   { w: 226, h: 52, d: '<polygon class="s" points="22,1.5 204,1.5 224.5,26 204,50.5 22,50.5 1.5,26"/>' },
+  decision: { w: 226, h: 78, d: '<polygon class="s" points="113,1.5 224.5,39 113,76.5 1.5,39"/>' },
+};
+const shapeSvg = (type, scale = 1) => { const s = SHAPES[type]; return `<svg viewBox="0 0 ${s.w} ${s.h}" width="${s.w * scale}" height="${s.h * scale}" aria-hidden="true">${s.d}</svg>`; };
+const iconSvg = type => {
+  const m = { terminal: '<rect class="s" x="3" y="6" width="58" height="22" rx="11"/>', process: '<rect class="s" x="3" y="5" width="58" height="24" rx="2"/>',
+    repeat: '<polygon class="s" points="11,5 53,5 61,17 53,29 11,29 3,17"/>', decision: '<polygon class="s" points="32,2 61,17 32,32 3,17"/>' };
+  return `<svg class="ic ${type}" viewBox="0 0 64 34" aria-hidden="true">${m[type]}</svg>`;
+};
+const NAMES = { terminal: '시작/끝', process: '처리', repeat: '반복', decision: '판단(선택)' };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const tile = (key, svg, label, on, st, s) => `<div class="tile${on ? ' on' : ''}${s && s.last === key ? ' pop' : ''}" data-k="${key}">${svg}<div>${label}</div><div class="st">${st}</div></div>`;
+const josa = (w, a, b) => { const c = w.charCodeAt(w.length - 1) - 0xAC00; return w + (c >= 0 && c <= 11171 && c % 28 ? a : b); };
+const ok = () => ({ ok: true });
+const no = msg => ({ ok: false, msg });
+
+/* ---------- 상황 데이터 ---------- */
+const T = t => ({ type: 'terminal', text: t });
+const P = t => ({ type: 'process', text: t });
+const R = (t, body) => ({ type: 'repeat', text: t, body });
+const D = (t, yes, no_ = []) => ({ type: 'decision', text: t, yes, no: no_ });
+
+const WORDS = [['해돋이', '해도지'], ['같이', '가치'], ['놀이터', '노리터'], ['깨끗이', '깨끗히'], ['설거지', '설겆이'], ['맑은 하늘', '막은 하늘'], ['몇 월 며칠', '몇 월 몇일'], ['웃어른', '윗어른']];
+const ITEMS = { pet: ['페트병', 'plastic'], yogurt: ['요구르트병', 'plastic'], shampoo: ['샴푸 통', 'plastic'], news: ['신문지', 'paper'], note: ['다 쓴 공책', 'paper'], box: ['택배 상자', 'paper'], tissue: ['쓴 휴지', 'trash'], brush: ['낡은 칫솔', 'trash'], pencil: ['몽당연필', 'trash'] };
+
+const STAGES = [
+  { key: 'brush', name: '양치하기', concept: '순차', tag: 'seq', art: I.tooth(true),
+    story: '자기 전에 이를 닦아요. 토리가 양치를 할 수 있도록 하는 일을 차례대로 적어 주세요.',
+    goal: '목표: 처리 기호로 차례대로 적기 (순차). 순서가 바뀌면 토리가 이상하게 양치해요!',
+    variants: [{ label: '저녁 양치', init: () => ({ paste: false, brushed: false, cup: false, rinsed: false, clean: false }) }],
+    actions: [
+      { cmd: 'clean', re: /칫솔.*(씻|헹|빨|닦)|칫솔을?물/, label: '칫솔 씻기' },
+      { cmd: 'paste', re: /치약/, label: '칫솔에 치약 짜기' },
+      { cmd: 'cup', re: /컵|물.*받|물.*담/, label: '컵에 물 받기' },
+      { cmd: 'rinse', re: /입|헹|가글|뱉/, label: '입 헹구기' },
+      { cmd: 'brush', re: /이.*닦|이를|닦|양치|문지/, label: '이 닦기' },
+    ],
+    distract: ['세수하기'],
+    apply(s, c) {
+      if (c === 'paste') { if (s.brushed) return no('이를 다 닦은 다음에 치약을 짰어요. 치약은 닦기 전에 짜야 해요.'); s.paste = true; }
+      if (c === 'brush') { if (!s.paste) return no('치약 없이 이를 닦았어요. 먼저 칫솔에 치약을 짜야 해요.'); s.brushed = true; }
+      if (c === 'cup') s.cup = true;
+      if (c === 'rinse') { if (!s.brushed) return no('아직 이를 닦지 않았는데 입을 헹궜어요.'); if (!s.cup) return no('컵에 물이 없어서 입을 헹굴 수 없어요.'); s.rinsed = true; }
+      if (c === 'clean') { if (!s.brushed) return no('이를 닦기도 전에 칫솔을 씻었어요.'); s.clean = true; }
+      return ok();
+    },
+    goal_(s) {
+      if (!s.brushed) return no('이를 닦지 않았어요.');
+      if (!s.rinsed) return no('입을 헹구지 않았어요. 입안에 치약이 남아 있어요.');
+      if (!s.clean) return no('칫솔을 씻지 않았어요.');
+      return ok();
+    },
+    render: s => `<div class="scene-cap"><span>세면대</span></div><div class="tiles">${tile('paste', I.brush(s.paste), '칫솔', s.paste, s.paste ? '치약 묻음' : '비어 있음', s)}${tile('brush', I.tooth(s.brushed), '이', s.brushed, s.brushed ? '반짝반짝' : '닦기 전', s)}${tile('cup', I.cup(s.cup), '컵', s.cup, s.cup ? '물 있음' : '비어 있음', s)}${tile('rinse', I.mouth(s.rinsed), '입', s.rinsed, s.rinsed ? '헹굼' : '헹구기 전', s)}${tile('clean', I.brush(false), '칫솔 씻기', s.clean, s.clean ? '깨끗함' : '씻기 전', s)}</div>`,
+    hints: ['양치할 때 내가 하는 일을 떠올려 보세요. 치약이 먼저일까요, 닦기가 먼저일까요?', '처리 기호 5개가 필요해요: 치약 짜기, 이 닦기, 컵에 물 받기, 입 헹구기, 칫솔 씻기. 차례를 정해 보세요.', '시작 → 칫솔에 치약 짜기 → 이 닦기 → 컵에 물 받기 → ? → ? → 끝'],
+    solution: [T('시작'), P('칫솔에 치약 짜기'), P('이 닦기'), P('컵에 물 받기'), P('입 헹구기'), P('칫솔 씻기'), T('끝')] },
+
+  { key: 'water', name: '화분에 물 주기', concept: '반복', tag: 'rep', limit: 3, tedium: true, art: I.pot(true),
+    story: '베란다에 화분 10개가 한 줄로 있어요. 토리는 1번 화분 앞에 서 있어요. 물뿌리개에 물을 채운 뒤, 모든 화분에 물을 주세요.',
+    goal: '목표: 같은 일이 되풀이될 때 반복 기호 쓰기',
+    variants: [{ label: '화분 10개', init: () => ({ n: 10, pos: 0, can: false, w: Array(10).fill(false) }) }],
+    actions: [
+      { cmd: 'fill', re: /물뿌리개|채우|채운|담/, label: '물뿌리개에 물 채우기' },
+      { cmd: 'water', re: /물.*주|물주|뿌리/, label: '화분에 물 주기' },
+      { cmd: 'move', re: /다음|옆|이동|걸|가기/, label: '다음 화분으로 가기' },
+    ],
+    distract: ['창문 열기'],
+    apply(s, c) {
+      if (c === 'fill') s.can = true;
+      if (c === 'water') { if (!s.can) return no('물뿌리개가 비어 있어요. 먼저 물을 채워야 해요.'); if (s.pos >= s.n) return no('여기에는 화분이 없어요.'); if (s.w[s.pos]) return no(`${s.pos + 1}번 화분에는 벌써 물을 줬어요. 물을 너무 많이 주면 식물이 아파요.`); s.w[s.pos] = true; }
+      if (c === 'move') { if (s.pos >= s.n) return no('화분이 더 없는데 계속 걸어갔어요.'); s.pos++; }
+      return ok();
+    },
+    goal_(s) { const left = s.w.filter(x => !x).length; return left ? no(`아직 물을 못 받은 화분이 ${left}개 있어요.`) : ok(); },
+    render: s => `<div class="scene-cap"><span>베란다</span><span style="display:flex;align-items:center;gap:6px">물뿌리개 <span style="width:34px;height:34px;display:inline-block">${I.can(s.can)}</span></span></div><div class="pots">${s.w.map((w, i) => `<div class="pot${s.last === 'p' + i ? ' pop' : ''}">${s.pos === i ? '<div class="me">' + TORI + '</div>' : ''}${I.pot(w)}<span class="n">${i + 1}</span></div>`).join('')}</div>${s.pos >= s.n ? '<div class="shelf-end">토리가 화분 줄 끝에 있어요 →</div>' : ''}`,
+    hints: ['화분 하나에 물을 줄 때 하는 일을 먼저 생각해 보세요. 물 주기, 그리고 다음 화분으로 가기!', '‘화분에 물 주기 → 다음 화분으로 가기’를 반복 기호 안에 넣어요. 물뿌리개는 처음에 한 번만 채우면 돼요.', '시작 → 물뿌리개에 물 채우기 → [10번 반복하기 : 화분에 물 주기 → ?] → 끝'],
+    solution: [T('시작'), P('물뿌리개에 물 채우기'), R('10번 반복하기', [P('화분에 물 주기'), P('다음 화분으로 가기')]), T('끝')] },
+
+  { key: 'out', name: '외출 준비', concept: '선택', tag: 'dec', choose: true, art: I.umbrella(true),
+    story: '토리가 학교에 가요. 비가 오면 우산을 챙기고, 비가 오지 않으면 모자를 써요. 월요일과 화요일 모두 알맞게 준비해야 해요.',
+    goal: '목표: 상황에 따라 다른 일을 하도록 판단 기호 쓰기',
+    variants: [{ label: '월요일 (비)', init: () => ({ rain: true, bag: false, shoes: false, umb: false, hat: false, out: false }) },
+               { label: '화요일 (맑음)', init: () => ({ rain: false, bag: false, shoes: false, umb: false, hat: false, out: false }) }],
+    actions: [
+      { cmd: 'umb', re: /우산/, label: '우산 챙기기' },
+      { cmd: 'hat', re: /모자/, label: '모자 쓰기' },
+      { cmd: 'bag', re: /가방/, label: '가방 메기' },
+      { cmd: 'shoes', re: /신발|운동화|신기|신어/, label: '신발 신기' },
+      { cmd: 'out', re: /나가|출발|밖|현관|문/, label: '집 밖으로 나가기' },
+    ],
+    distract: ['텔레비전 켜기'],
+    conds: [{ kind: 'rain', re: /비|우산|흐/, label: '비가 오나요?' }, { kind: 'sun', re: /맑|해가|햇|화창/, label: '날씨가 맑나요?' }],
+    apply(s, c) {
+      if (s.out) return no('이미 집 밖으로 나갔는데 또 준비를 했어요. 나가기는 맨 마지막에 해요.');
+      if (c === 'out') { if (!s.shoes) return no('신발을 안 신고 밖으로 나갔어요!'); s.out = true; return ok(); }
+      s[c] = true; return ok();
+    },
+    cond(s, k) { return k === 'rain' ? s.rain : !s.rain; },
+    goal_(s) {
+      if (!s.out) return no('아직 집 밖으로 나가지 않았어요.');
+      if (!s.bag) return no('가방을 두고 학교에 갔어요.');
+      if (s.rain && !s.umb) return no('비가 오는데 우산을 챙기지 않았어요. 토리가 홀딱 젖었어요.');
+      if (s.rain && s.hat) return no('비 오는 날인데 모자를 썼어요. 비 오는 날에는 우산만 챙겨요.');
+      if (!s.rain && s.umb) return no('맑은 날인데 우산을 챙겼어요. 짐만 무거워졌어요.');
+      if (!s.rain && !s.hat) return no('햇볕이 쨍쨍한데 모자를 쓰지 않았어요.');
+      return ok();
+    },
+    render: s => `<div class="window">${s.rain ? I.rain : I.sun}<div><b>${s.rain ? '비가 와요' : '맑아요'}</b><div style="font-size:13px;color:var(--ink-soft)">창밖 날씨</div></div></div><div class="tiles">${tile('bag', I.bag(s.bag), '가방', s.bag, s.bag ? '멨어요' : '', s)}${tile('shoes', I.shoes(s.shoes), '신발', s.shoes, s.shoes ? '신었어요' : '', s)}${tile('umb', I.umbrella(s.umb), '우산', s.umb, s.umb ? '챙겼어요' : '', s)}${tile('hat', I.hat(s.hat), '모자', s.hat, s.hat ? '썼어요' : '', s)}${tile('out', I.door(s.out), '현관문', s.out, s.out ? '출발!' : '', s)}</div>`,
+    hints: ['월요일과 화요일에 똑같이 하는 일과, 날씨에 따라 다르게 하는 일을 나눠 보세요.', '날씨에 따라 다른 일은 판단 기호(마름모)로 물어요. ‘비가 오나요?’ 예 쪽에는 우산, 아니오 쪽에는 모자.', '시작 → 가방 메기 → ◇비가 오나요? 예: 우산 챙기기 / 아니오: ? → 신발 신기 → ? → 끝'],
+    solution: [T('시작'), P('가방 메기'), D('비가 오나요?', [P('우산 챙기기')], [P('모자 쓰기')]), P('신발 신기'), P('집 밖으로 나가기'), T('끝')] },
+
+  { key: 'grade', name: '받아쓰기 채점', concept: '반복 + 선택', tag: 'dec', limit: 4, art: I.sheet,
+    story: '토리가 짝꿍의 받아쓰기 8문제를 채점해요. 맞으면 동그라미, 틀리면 빗금을 긋고 다음 문제로 넘어가요. 다 채점하면 점수를 적어요. 철수와 영희, 두 사람 시험지를 모두 채점해야 해요.',
+    goal: '목표: 반복 기호 안에 판단 기호 넣기 (처리 기호 4개까지)',
+    variants: [{ label: '철수 시험지', init: () => ({ n: 8, i: 0, right: [1, 0, 1, 0, 1, 1, 0, 1].map(Boolean), m: Array(8).fill(null), score: false }) },
+               { label: '영희 시험지', init: () => ({ n: 8, i: 0, right: [0, 1, 1, 1, 0, 0, 1, 0].map(Boolean), m: Array(8).fill(null), score: false }) }],
+    actions: [
+      { cmd: 'score', re: /점수/, label: '점수 적기' },
+      { cmd: 'o', re: /동그라미|○|원/, label: '동그라미 그리기' },
+      { cmd: 'x', re: /빗금|사선|✓|체크|엑스|X|x/, label: '빗금 긋기' },
+      { cmd: 'next', re: /다음|넘어|넘기/, label: '다음 문제로 넘어가기' },
+    ],
+    distract: ['연필 깎기'],
+    conds: [{ kind: 'right', re: /맞|정답|옳/, label: '맞게 썼나요?' }, { kind: 'wrong', re: /틀|오답/, label: '틀렸나요?' }],
+    apply(s, c) {
+      if (c === 'o' || c === 'x') {
+        if (s.i >= s.n) return no('채점할 문제가 더 없어요.');
+        if (s.m[s.i]) return no(`${s.i + 1}번은 벌써 채점했어요.`);
+        if (c === 'o' && !s.right[s.i]) return no(`${s.i + 1}번은 틀린 답인데 동그라미를 그렸어요.`);
+        if (c === 'x' && s.right[s.i]) return no(`${s.i + 1}번은 맞은 답인데 빗금을 그었어요.`);
+        s.m[s.i] = c;
+      }
+      if (c === 'next') { if (s.i >= s.n) return no('마지막 문제를 지나 더 넘어갔어요.'); s.i++; }
+      if (c === 'score') { if (s.m.some(x => !x)) return no('아직 채점하지 않은 문제가 있는데 점수를 적었어요.'); s.score = true; }
+      return ok();
+    },
+    cond(s, k) { const r = s.i < s.n && s.right[s.i]; return k === 'right' ? r : !r; },
+    goal_(s) { const left = s.m.filter(x => !x).length; if (left) return no(`채점하지 않은 문제가 ${left}개 있어요.`); if (!s.score) return no('점수를 적지 않았어요.'); return ok(); },
+    render: (s, v) => `<div class="sheet"><div class="scene-cap" style="margin-bottom:4px"><span>${v.label}</span><span>받아쓰기</span></div>${WORDS.map((w, i) => `<div class="ln${s.i === i ? ' cur' : ''}${s.last === 'q' + i ? ' pop' : ''}"><span class="no">${i + 1}.</span><span>${w[s.right[i] ? 0 : 1]}</span><span>${s.m[i] === 'o' ? I.ring : s.m[i] === 'x' ? I.slash : ''}</span></div>`).join('')}<div class="score">${s.score ? `점수: ${s.m.filter(x => x === 'o').length} / ${s.n}` : '점수:'}</div></div>`,
+    hints: ['문제 하나를 채점할 때 하는 일을 먼저 적어 보세요. 맞았는지 묻고, 표시하고, 다음 문제로!', '판단 기호 ‘맞게 썼나요?’를 반복 기호 안에 넣어요. 8문제니까 8번 반복해요. 점수는 반복이 끝난 뒤에 한 번만 적어요.', '시작 → [8번 반복하기 : ◇맞게 썼나요? 예: 동그라미 그리기 / 아니오: ? → 다음 문제로 넘어가기] → ? → 끝'],
+    solution: [T('시작'), R('8번 반복하기', [D('맞게 썼나요?', [P('동그라미 그리기')], [P('빗금 긋기')]), P('다음 문제로 넘어가기')]), P('점수 적기'), T('끝')] },
+
+  { key: 'recycle', name: '분리수거', concept: '종합', tag: 'all', until: true, art: I.bin,
+    story: '바구니에 모아 둔 쓰레기를 분리수거해요. 장갑을 끼고, 물건을 하나씩 꺼내 플라스틱·종이·일반 쓰레기 통에 나눠 넣어요. 끝나면 손을 씻어요. 바구니마다 물건 개수가 달라요!',
+    goal: '목표: 순차·반복·선택을 모두 써서 두 바구니 정리하기',
+    variants: [{ label: '바구니 1 (5개)', init: () => ({ glove: false, basket: ['pet', 'news', 'tissue', 'note', 'yogurt'], hand: null, bins: { plastic: [], paper: [], trash: [] }, washed: false }) },
+               { label: '바구니 2 (7개)', init: () => ({ glove: false, basket: ['box', 'brush', 'shampoo', 'tissue', 'news', 'pet', 'pencil'], hand: null, bins: { plastic: [], paper: [], trash: [] }, washed: false }) }],
+    actions: [
+      { cmd: 'glove', re: /장갑/, label: '장갑 끼기' },
+      { cmd: 'plastic', re: /플라스틱/, label: '플라스틱 통에 넣기' },
+      { cmd: 'paper', re: /종이/, label: '종이 통에 넣기' },
+      { cmd: 'trash', re: /일반|쓰레기통|쓰레기 통|쓰레기봉투/, label: '일반 쓰레기 통에 넣기' },
+      { cmd: 'wash', re: /손.*씻|씻/, label: '손 씻기' },
+      { cmd: 'take', re: /꺼내|집|하나/, label: '바구니에서 하나 꺼내기' },
+    ],
+    distract: ['바구니 흔들기'],
+    conds: [{ kind: 'plastic', re: /플라스틱/, label: '플라스틱인가요?' }, { kind: 'paper', re: /종이/, label: '종이인가요?' }, { kind: 'empty', re: /비었|비어|없나/, label: '바구니가 비었나요?' }],
+    untilRe: /빌|비|없을|다\s*꺼|모두|까지|계속/, untilLabel: '바구니가 빌 때까지 반복하기',
+    until: s => s.basket.length === 0,
+    apply(s, c) {
+      if (s.washed) return no('손을 씻은 뒤에 또 쓰레기를 만졌어요. 손 씻기는 맨 마지막에 해요.');
+      if (c === 'glove') { s.glove = true; return ok(); }
+      if (c === 'take') { if (!s.glove) return no('맨손으로 쓰레기를 만졌어요. 장갑을 먼저 껴요.'); if (s.hand) return no('손에 이미 물건이 있어요. 먼저 통에 넣어야 해요.'); if (!s.basket.length) return no('바구니가 비었는데 또 꺼내려고 했어요.'); s.hand = s.basket.shift(); s.last = 'hand'; return ok(); }
+      if (c === 'wash') { if (s.basket.length || s.hand) return no('아직 분리수거가 끝나지 않았는데 손을 씻었어요.'); s.washed = true; return ok(); }
+      if (!s.hand) return no('손에 든 물건이 없는데 통에 넣으려고 했어요. 먼저 바구니에서 꺼내요.');
+      const [nm, ty] = ITEMS[s.hand], KIND = { plastic: '플라스틱', paper: '종이', trash: '일반 쓰레기' };
+      if (ty !== c) return no(`${josa(nm, '을', '를')} ${KIND[c]} 통에 넣었어요. ${josa(nm, '은', '는')} ${KIND[ty]}예요.`);
+      s.bins[c].push(s.hand); s.hand = null; s.last = c; return ok();
+    },
+    cond(s, k) { if (k === 'empty') return !s.basket.length; return !!s.hand && ITEMS[s.hand][1] === k; },
+    condCheck(s, k) { if ((k === 'plastic' || k === 'paper') && !s.hand) return '손에 든 물건이 없는데 무엇인지 물어봤어요. 먼저 바구니에서 꺼내요.'; return null; },
+    goal_(s) { if (s.basket.length || s.hand) return no(`아직 정리하지 못한 물건이 ${s.basket.length + (s.hand ? 1 : 0)}개 있어요.`); if (!s.washed) return no('손을 씻지 않았어요.'); return ok(); },
+    render: s => `<div class="scene-cap"><span style="display:flex;gap:8px;align-items:center"><span style="width:30px;height:30px;display:inline-block">${I.gloves(s.glove)}</span>${s.glove ? '장갑 낌' : '맨손'}</span><span style="display:flex;gap:8px;align-items:center"><span style="width:30px;height:30px;display:inline-block">${I.hands(s.washed)}</span>${s.washed ? '손 씻음' : ''}</span></div><div class="basket"><span class="lbl">바구니</span>${s.basket.length ? s.basket.map(k => `<span class="item">${ITEMS[k][0]}</span>`).join('') : '<span class="item" style="opacity:.6">비었어요</span>'}</div><div class="basket"><span class="lbl">토리 손</span>${s.hand ? `<span class="item hand${s.last === 'hand' ? ' pop' : ''}">${ITEMS[s.hand][0]}</span>` : ''}</div><div class="bins">${[['plastic', '플라스틱'], ['paper', '종이'], ['trash', '일반 쓰레기']].map(([k, n]) => `<div class="bin ${k}${s.last === k ? ' pop' : ''}"><h4>${n}</h4>${s.bins[k].map(x => `<span class="item">${ITEMS[x][0]}</span>`).join('')}</div>`).join('')}</div>`,
+    hints: ['처음에 한 번 하는 일, 물건마다 되풀이하는 일, 끝에 한 번 하는 일로 나눠 보세요. 바구니마다 개수가 달라서 횟수를 정할 수 없어요.', '‘바구니가 빌 때까지 반복하기’ 안에서 물건을 하나 꺼내고, 판단 기호 2개로 물어요. 플라스틱인가요? 아니면 종이인가요?', '장갑 끼기 → [바구니가 빌 때까지 반복하기 : 하나 꺼내기 → ◇플라스틱인가요? 예: 플라스틱 통 / 아니오: ◇종이인가요? 예: ? / 아니오: ?] → 손 씻기'],
+    solution: [T('시작'), P('장갑 끼기'), R('바구니가 빌 때까지 반복하기', [P('바구니에서 하나 꺼내기'), D('플라스틱인가요?', [P('플라스틱 통에 넣기')], [D('종이인가요?', [P('종이 통에 넣기')], [P('일반 쓰레기 통에 넣기')])])]), P('손 씻기'), T('끝')] },
+];
+
+/* ---------- 기능 열림 ---------- */
+const KEY = 'tori-life-v1';
+const blank = () => ({ unlocked: 1, stars: {}, programs: {}, wrong: {}, hints: {}, got: {}, teacher: false });
+let progress = blank();
+try { const raw = localStorage.getItem(KEY); if (raw) progress = Object.assign(blank(), JSON.parse(raw)); } catch (e) {}
+const feat = no_ => ({ repeat: no_ >= 2, decision: no_ >= 3, until: no_ >= 5 });
+
+/* ---------- 글 해석 ---------- */
+const NUMW = { '한': 1, '두': 2, '세': 3, '네': 4, '다섯': 5, '여섯': 6, '일곱': 7, '여덟': 8, '아홉': 9, '열': 10 };
+const norm = t => (t || '').replace(/\s+/g, '');
+function parseProcess(text, st) {
+  const t = norm(text);
+  if (!t) return { err: 'empty' };
+  const many = t.match(/(\d+)(번|회|개|칸)/), manyW = t.match(/(두|세|네|다섯|여섯|일곱|여덟|아홉|열)(번|회)/);
+  if ((many && +many[1] !== 1) || manyW || /모든|전부|모두|다주/.test(t)) return { err: '처리 기호 하나에는 한 가지 일을 한 번만 적어요. 여러 번 하려면 반복 기호를 써요.' };
+  for (const a of st.actions) if (a.re.test(t)) return { cmd: a.cmd };
+  return { err: 'unknown' };
+}
+function parseRepeat(text, st, f) {
+  const t = norm(text);
+  if (!t) return { err: 'empty' };
+  let n = null; const m = t.match(/(\d+)/);
+  if (m) n = +m[1]; else { const w = t.match(/(다섯|여섯|일곱|여덟|아홉|열|한|두|세|네)(번|회)/); if (w) n = NUMW[w[1]]; }
+  if (n !== null) { if (n < 1) return { err: '반복 횟수는 1번 이상이어야 해요.' }; if (n > 30) return { err: '반복 횟수는 30번까지 쓸 수 있어요.' }; return { count: n }; }
+  if (st.untilRe && st.untilRe.test(t)) return f.until ? { until: true } : { err: '아직은 횟수를 적어요.' };
+  if (/까지|계속/.test(t)) return { err: '이 상황에서는 ‘4번 반복하기’처럼 횟수를 적어요.' };
+  return { err: 'unknown' };
+}
+function parseCond(text, st) {
+  const t = norm(text);
+  if (!t) return { err: 'empty' };
+  for (const c of st.conds || []) if (c.re.test(t)) return { kind: c.kind };
+  return { err: 'unknown' };
+}
+
+/* ---------- 실행 ---------- */
+function* exec(list, s, st, root) {
+  for (let i = 0; i < list.length; i++) {
+    const n = list[i];
+    if (n.type === 'terminal') { yield { node: n, end: root && i === list.length - 1 }; continue; }
+    if (n.type === 'process') { yield { node: n, cmd: n.parsed.cmd }; continue; }
+    if (n.type === 'repeat') {
+      if (n.parsed.until) { while (!st.until(s)) { yield { node: n, loop: true }; yield* exec(n.body, s, st, false); } }
+      else for (let k = 0; k < n.parsed.count; k++) { yield { node: n, loop: true }; yield* exec(n.body, s, st, false); }
+      continue;
+    }
+    if (n.type === 'decision') {
+      const bad = st.condCheck && st.condCheck(s, n.parsed.kind);
+      if (bad) { yield { node: n, fail: bad }; return; }
+      const r = st.cond(s, n.parsed.kind);
+      yield { node: n, cond: r };
+      yield* exec(r ? n.yes : n.no, s, st, false);
+    }
+  }
+}
+const MAX_EVENTS = 800;
+function step(ev, s, st) {
+  if (ev.fail) return { done: true, ok: false, msg: ev.fail };
+  if (ev.cmd) { s.last = ev.cmd; const a = st.apply(s, ev.cmd); if (!a.ok) return { done: true, ok: false, msg: a.msg }; }
+  if (ev.end) { const g = st.goal_(s); return { done: true, ok: g.ok, msg: g.ok ? '' : '‘끝’까지 왔지만 ' + g.msg }; }
+  return { done: false };
+}
+function stepAll(program, s, st) {
+  const g = exec(program, s, st, true); let k = 0;
+  while (true) {
+    const r = g.next();
+    if (r.done) return { ok: false, msg: '순서도가 중간에 멈췄어요.' };
+    if (++k > MAX_EVENTS) return { ok: false, node: r.value.node, msg: '반복이 끝나지 않아요.' };
+    const res = step(r.value, s, st);
+    if (res.done) return { ok: res.ok, msg: res.msg, node: r.value.node };
+  }
+}
+
+/* ---------- 검사 ---------- */
+function walk(list, fn, depth = 0) { list.forEach(n => { fn(n, depth); if (n.body) walk(n.body, fn, depth + 1); if (n.yes) { walk(n.yes, fn, depth + 1); walk(n.no, fn, depth + 1); } }); }
+function countNodes(list) { let c = 0, p = 0, d = 0; walk(list, n => { c++; if (n.type === 'process') p++; if (n.type === 'decision') d++; }); return { all: c, proc: p, dec: d }; }
+const EXAMPLE = { terminal: '‘시작’ 또는 ‘끝’', repeat: '‘4번 반복하기’' };
+function validate(program, no_) {
+  const st = STAGES[no_ - 1], f = feat(no_);
+  if (!program.length) return { msg: '오른쪽 순서도 기호를 눌러 순서도를 만들어 보세요.' };
+  let bad = null;
+  walk(program, (n, depth) => {
+    if (bad) return;
+    if (n.type === 'terminal') {
+      if (depth > 0) { bad = { node: n, msg: '시작/끝 기호는 반복이나 판단 안에 넣을 수 없어요.' }; return; }
+      const t = norm(n.text);
+      if (!t) { bad = { node: n, msg: '시작/끝 기호에 ‘시작’ 또는 ‘끝’을 적어 주세요.' }; return; }
+      if (!/시작|끝|종료|출발/.test(t)) { bad = { node: n, msg: '시작/끝 기호에는 ‘시작’ 또는 ‘끝’만 적어요.' }; return; }
+      n.parsed = { start: /시작|출발/.test(t) }; return;
+    }
+    const p = n.type === 'process' ? parseProcess(n.text, st) : n.type === 'repeat' ? parseRepeat(n.text, st, f) : parseCond(n.text, st);
+    if (p.err) {
+      const ex = n.type === 'process' ? '입력 도우미의 말처럼 적어 보세요.' : n.type === 'decision' ? `예: ‘${(st.conds || [])[0]?.label}’` : `예: ${f.until && st.untilLabel ? '‘' + st.untilLabel + '’' : EXAMPLE.repeat}`;
+      bad = { node: n, msg: p.err === 'empty' ? `${NAMES[n.type]} 기호의 칸이 비어 있어요. 회색 예시처럼 적어 보세요.` : p.err === 'unknown' ? `토리가 ‘${n.text}’의 뜻을 잘 모르겠대요. ${ex}` : p.err }; return;
+    }
+    n.parsed = p;
+    if (n.type === 'repeat' && !n.body.length) bad = { node: n, msg: '반복 기호 안이 비어 있어요. 되풀이할 일을 안에 넣어 주세요.' };
+    if (n.type === 'decision' && !n.yes.length && !n.no.length) bad = { node: n, msg: '판단 기호의 ‘예’나 ‘아니오’ 쪽에 할 일을 넣어 주세요.' };
+  });
+  if (bad) return bad;
+  const first = program[0], last = program[program.length - 1];
+  if (first.type !== 'terminal' || !first.parsed.start) return { node: first, msg: '순서도는 ‘시작’ 기호로 열어야 해요.' };
+  if (last === first || last.type !== 'terminal' || last.parsed.start) return { node: last, msg: '순서도의 맨 아래는 ‘끝’ 기호로 닫아야 해요.' };
+  const mid = program.slice(1, -1).find(n => n.type === 'terminal');
+  if (mid) return { node: mid, msg: '시작/끝 기호는 맨 처음과 맨 마지막에만 써요.' };
+  const c = countNodes(program);
+  if (st.limit && f.repeat && c.proc > st.limit) return { counts: true, msg: `이번 상황에서는 처리 기호를 ${st.limit}개까지만 쓸 수 있어요. 지금 ${c.proc}개예요. 반복 기호로 줄여 보세요!` };
+  return { ok: true };
+}
+
+/* ---------- 저장 ---------- */
+let saveTimer = null, cur = null;
+function strip(list) { return list.map(n => { const o = { type: n.type, text: n.text || '' }; if (n.ph) o.ph = n.ph; if (n.body) o.body = strip(n.body); if (n.yes) { o.yes = strip(n.yes); o.no = strip(n.no); } return o; }); }
+function save() { clearTimeout(saveTimer); saveTimer = setTimeout(() => { try { if (cur) progress.programs[cur.no] = strip(cur.program); localStorage.setItem(KEY, JSON.stringify(progress)); } catch (e) {} }, 250); }
+let uid = 1;
+function withIds(list) { return list.map(n => { const o = { id: uid++, type: n.type, text: n.text || '', ph: n.ph }; if (n.type === 'repeat') o.body = withIds(n.body || []); if (n.type === 'decision') { o.yes = withIds(n.yes || []); o.no = withIds(n.no || []); } return o; }); }
+
+/* ---------- 공용 UI ---------- */
+const $ = id => document.getElementById(id);
+function toast(msg) { const t = $('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2600); }
+function modal(title, html, buttons) {
+  const card = $('modal-card');
+  card.innerHTML = `<h2 id="modal-title">${title}</h2>${html}<div class="modal-actions"></div>`;
+  const row = card.querySelector('.modal-actions');
+  buttons.forEach(b => { const el = document.createElement('button'); el.type = 'button'; el.className = 'btn' + (b.primary ? ' primary' : ''); el.textContent = b.label; el.onclick = () => { closeModal(); b.on && b.on(); }; row.append(el); });
+  $('modal').hidden = false;
+  setTimeout(() => (row.querySelector('.primary') || row.firstChild)?.focus(), 30);
+}
+function closeModal() { $('modal').hidden = true; }
+const gift = (type, text) => `<div class="gift"><div class="demo node ${type}">${shapeSvg(type, .6)}</div><p>${text}</p></div>`;
+
+/* ---------- 순서도 그리기 ---------- */
+function renderList(list, ctx, owner, branch) {
+  const box = document.createElement('div'); box.className = 'flist';
+  const slot = i => {
+    const b = document.createElement('button'); b.type = 'button';
+    const between = i > 0 && i < list.length;
+    const isActive = ctx.active && ctx.active.owner === owner && ctx.active.branch === branch && ctx.active.index === i;
+    const emptyRoot = owner === null && list.length === 0;
+    b.className = 'slot' + (between ? '' : ' edge') + (isActive ? ' active' : '') + (emptyRoot ? ' big' : '');
+    b.dataset.owner = owner === null ? '' : owner; b.dataset.branch = branch; b.dataset.index = i;
+    const label = emptyRoot ? '오른쪽 순서도 기호를 눌러 시작해요' : isActive ? '여기에 넣어요' : list.length === 0 ? '비어 있어요 · 눌러서 고르기' : '+ 여기에 넣기';
+    b.setAttribute('aria-label', '기호 넣을 자리: ' + label);
+    b.innerHTML = (between ? '<span class="ln"></span>' : '') + `<span class="add">${label}</span>` + (between ? '<span class="ah"></span>' : '');
+    return b;
+  };
+  list.forEach((n, i) => { box.append(slot(i)); box.append(renderNode(n, ctx)); });
+  box.append(slot(list.length));
+  return box;
+}
+function renderNode(n, ctx) {
+  const s = SHAPES[n.type];
+  const el = document.createElement('div'); el.className = 'node ' + n.type; el.dataset.id = n.id;
+  const row = document.createElement('div'); row.className = 'node-row';
+  const sh = document.createElement('div'); sh.className = 'shape'; sh.style.width = s.w + 'px'; sh.style.height = s.h + 'px';
+  sh.innerHTML = `<svg viewBox="0 0 ${s.w} ${s.h}" aria-hidden="true">${s.d}</svg>`;
+  const inp = document.createElement('input'); inp.type = 'text'; inp.id = 'in-' + n.id; inp.value = n.text || '';
+  inp.placeholder = n.ph || ''; inp.dataset.id = n.id; inp.autocomplete = 'off'; inp.spellcheck = false;
+  inp.setAttribute('aria-label', NAMES[n.type] + ' 기호 내용');
+  sh.append(inp);
+  const sp = document.createElement('div'); sp.className = 'tools-spacer'; row.append(sp);
+  row.append(sh);
+  const tl = document.createElement('div'); tl.className = 'tools';
+  tl.innerHTML = `<button type="button" data-act="up" data-id="${n.id}" aria-label="위로 옮기기">▲</button><button type="button" class="del" data-act="del" data-id="${n.id}" aria-label="지우기">✕</button><button type="button" data-act="down" data-id="${n.id}" aria-label="아래로 옮기기">▼</button>`;
+  row.append(tl);
+  el.append(row);
+  if (n.type === 'repeat') { const lp = document.createElement('div'); lp.className = 'loop'; lp.innerHTML = '<span class="loop-label">↺ 반복할 일</span>'; lp.append(renderList(n.body, ctx, n.id, 'body')); el.append(lp); }
+  if (n.type === 'decision') {
+    const br = document.createElement('div'); br.className = 'branches';
+    ['yes', 'no'].forEach(k => { const b = document.createElement('div'); b.className = 'branch ' + k; b.innerHTML = `<span class="branch-label">${k === 'yes' ? '예' : '아니오'}</span>`; b.append(renderList(n[k], ctx, n.id, k)); br.append(b); });
+    el.append(br);
+  }
+  return el;
+}
+
+/* ---------- 인트로 ---------- */
+const SYMBOLS = [
+  { type: 'terminal', name: '시작/끝', alias: '단말 기호', desc: '순서도가 시작하는 곳과 끝나는 곳이에요. 맨 처음과 맨 마지막에 하나씩 있어요.', ex: '예: 시작, 끝', when: '처음부터 사용' },
+  { type: 'process', name: '처리', alias: '처리 기호', desc: '해야 할 일 하나를 적어요. 한 기호에는 한 가지 일만 적어요.', ex: '예: 칫솔에 치약 짜기', when: '처음부터 사용' },
+  { type: 'flow', name: '흐름선', alias: '화살표', desc: '다음에 무엇을 할지 순서를 이어 줘요. 이 앱에서는 자동으로 그려져요.', ex: '위에서 아래로 차례대로', when: '처음부터 사용' },
+  { type: 'repeat', name: '반복', alias: '준비 기호', desc: '같은 일을 여러 번 할 때 써요. 몇 번(또는 언제까지) 반복할지 적고, 안에 반복할 일을 넣어요.', ex: '예: 10번 반복하기', when: '‘화분에 물 주기’에서 얻어요' },
+  { type: 'decision', name: '판단', alias: '선택 기호', desc: '예/아니오로 답할 수 있는 질문을 적어요. 답에 따라 할 일이 달라져요.', ex: '예: 비가 오나요?', when: '‘외출 준비’에서 얻어요' },
+];
+function introInit() {
+  $('hero-list').innerHTML = STAGES.map((st, i) => `<div class="row">${st.art}<b>${i + 1}. ${st.name}</b><span>${st.concept}</span></div>`).join('');
+  $('symbol-grid').innerHTML = SYMBOLS.map(s => `<div class="panel symbol-card"><div class="demo">${s.type === 'flow'
+    ? '<svg width="40" height="70" viewBox="0 0 40 70" aria-hidden="true"><path d="M20 4 V56" stroke="var(--ink-soft)" stroke-width="3"/><path d="M11 52 L20 66 L29 52 Z" fill="var(--ink-soft)"/></svg>'
+    : `<div class="node ${s.type}">${shapeSvg(s.type, s.type === 'decision' ? .8 : .75)}</div>`}</div>
+    <h3>${s.name} <small>${s.alias}</small></h3><p>${s.desc}</p><div class="ex">${s.ex}</div><div class="when">${s.when}</div></div>`).join('');
+}
+
+/* ---------- 상황 지도 ---------- */
+const tagCls = { seq: 'tag-seq', rep: 'tag-rep', dec: 'tag-dec', all: 'tag-all' };
+function mapInit() {
+  const g = $('stage-grid'); g.innerHTML = ''; let total = 0;
+  STAGES.forEach((st, i) => {
+    const no_ = i + 1, open = progress.teacher || no_ <= progress.unlocked, stars = progress.stars[no_] || 0; total += stars;
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'stage-tile' + (stars ? ' done' : ''); b.disabled = !open;
+    b.innerHTML = `${open ? '' : PADLOCK}<span class="chip-tag ${tagCls[st.tag]}" style="align-self:flex-start">${st.concept}</span><span class="art">${st.art}</span><span class="num">상황 ${no_}</span><span class="name">${st.name}</span><span class="stars">${STAR(stars >= 1)}${STAR(stars >= 2)}${STAR(stars >= 3)}</span>`;
+    b.setAttribute('aria-label', `상황 ${no_} ${st.name} ${open ? '' : '(잠김)'} 별 ${stars}개`);
+    b.onclick = () => startStage(no_);
+    g.append(b);
+  });
+  $('star-total').textContent = `모은 별 ${total} / ${STAGES.length * 3}`;
+  $('teacher').textContent = progress.teacher ? '선생님 모드 끄기' : '선생님: 모든 상황 열기';
+}
+
+/* ---------- 플레이 ---------- */
+let running = false, stopReq = false;
+function startStage(no_) {
+  const st = STAGES[no_ - 1];
+  cur = { no: no_, st, variant: 0, program: withIds(progress.programs[no_] || []), focus: null };
+  cur.active = { owner: null, branch: 'root', index: cur.program.length };
+  show('play');
+  $('play-title').textContent = `상황 ${no_} · ${st.name}`;
+  $('play-tag').textContent = st.concept; $('play-tag').className = 'chip-tag ' + tagCls[st.tag];
+  $('story').textContent = st.story; $('goal').textContent = st.goal;
+  renderVariantTabs(); resetScene();
+  renderPalette(); renderFlow(); renderHints(); updateAttempts();
+  say(st.variants.length > 1 ? `${st.variants.map(v => v.label).join(', ')}. 순서도 하나로 모두 해내야 해요.` : '순서도를 다 만들었으면 ▶ 실행을 눌러요.');
+  if (no_ === 5 && !progress.got.until) { progress.got.until = true; save(); modal('새로운 반복: ~할 때까지', gift('repeat', '바구니마다 물건 개수가 달라서 횟수를 정할 수 없어요. 반복 기호에 <b>‘바구니가 빌 때까지 반복하기’</b>라고 적으면, 바구니가 빌 때까지 계속 반복해요.'), [{ label: '알겠어요!', primary: true }]); }
+}
+function renderVariantTabs() {
+  const box = $('variant-tabs'); box.innerHTML = '';
+  if (cur.st.variants.length < 2) { box.hidden = true; return; }
+  box.hidden = false;
+  cur.st.variants.forEach((v, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = v.label;
+    b.setAttribute('aria-pressed', i === cur.variant); b.disabled = running;
+    b.onclick = () => { if (running) return; cur.variant = i; renderVariantTabs(); resetScene(); };
+    box.append(b);
+  });
+}
+function resetScene() { cur.sim = cur.st.variants[cur.variant].init(); drawScene(); }
+function drawScene(fx) { const v = cur.st.variants[cur.variant]; $('scene').innerHTML = cur.st.render(cur.sim, v); if (fx) { const sc = $('scene'); sc.classList.remove('shake'); void sc.offsetWidth; sc.classList.add('shake'); } }
+
+function renderPalette() {
+  const f = feat(cur.no), box = $('palette'); box.innerHTML = '';
+  const items = [
+    { type: 'terminal', name: '시작/끝', sub: '처음과 마지막', on: true },
+    { type: 'process', name: '처리', sub: '할 일 하나', on: true },
+    { type: 'repeat', name: '반복', sub: f.repeat ? '같은 일 여러 번' : '상황 2부터 열려요', on: f.repeat, isNew: cur.no === 2 || cur.no === 5 },
+    { type: 'decision', name: '판단(선택)', sub: f.decision ? '예/아니오 질문' : '상황 3부터 열려요', on: f.decision, isNew: cur.no === 3 },
+  ];
+  items.forEach(it => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'pal-btn' + (it.isNew && it.on ? ' new' : ''); b.disabled = !it.on;
+    b.innerHTML = `${iconSvg(it.type)}<span class="t"><b>${it.name}</b><span>${it.sub}</span></span>${it.on ? '' : '<span style="margin-left:auto;width:18px;color:var(--ink-soft)">' + PADLOCK.replace('class="lock"', 'width="18" height="18"') + '</span>'}`;
+    b.onclick = () => insert(it.type);
+    box.append(b);
+  });
+  renderChips();
+}
+function chipWords(type) {
+  const st = cur.st, f = feat(cur.no);
+  if (type === 'terminal') return ['시작', '끝'];
+  if (type === 'repeat') return f.until && st.untilLabel ? [st.untilLabel, '5번 반복하기'] : ['3번 반복하기', '5번 반복하기', '8번 반복하기', '10번 반복하기'];
+  if (type === 'decision') return (st.conds || []).map(c => c.label);
+  return [...st.actions.map(a => a.label), ...(st.distract || [])];
+}
+function renderChips() {
+  const n = cur.focus && find(cur.focus);
+  const type = n ? n.node.type : 'process';
+  $('helper-sub').textContent = n ? `선택한 ${NAMES[type]} 기호에 넣을 말이에요. 눌러서 넣거나 직접 적어요. 필요 없는 말도 섞여 있어요!` : '기호 안의 칸을 누른 뒤 아래 말을 누르면 칸에 들어가요. 직접 적어도 돼요. 필요 없는 말도 섞여 있어요!';
+  const words = chipWords(type).slice().sort((a, b) => a.localeCompare(b, 'ko'));
+  $('chips').innerHTML = words.map(w => `<button type="button" data-w="${esc(w)}">${esc(w)}</button>`).join('');
+}
+$('chips').addEventListener('mousedown', e => e.preventDefault());
+$('chips').addEventListener('click', e => {
+  const b = e.target.closest('button[data-w]'); if (!b) return;
+  const n = cur.focus && find(cur.focus);
+  if (!n) { toast('먼저 순서도 기호 안의 칸을 눌러 주세요.'); return; }
+  n.node.text = b.dataset.w; const inp = $('in-' + n.node.id); if (inp) { inp.value = n.node.text; inp.focus(); }
+  clearMarks(); save();
+});
+
+function find(id, list = cur.program) {
+  for (let i = 0; i < list.length; i++) {
+    const n = list[i];
+    if (n.id === id) return { node: n, list, index: i };
+    for (const k of ['body', 'yes', 'no']) if (n[k]) { const r = find(id, n[k]); if (r) return r; }
+  }
+  return null;
+}
+function listOf(a) { if (a.owner === null) return cur.program; const f = find(a.owner); return f ? f.node[a.branch] : cur.program; }
+function contains(node, id) { let hit = false; walk([node], n => { if (n.id === id) hit = true; }); return hit; }
+function placeholder(type) {
+  const st = cur.st, f = feat(cur.no);
+  if (type === 'terminal') return cur.program.some(n => n.type === 'terminal') ? '끝' : '시작';
+  if (type === 'process') return '예) ' + st.actions[st.actions.length - 1].label;
+  if (type === 'repeat') return f.until && st.untilLabel ? '예) ' + st.untilLabel : '예) 5번 반복하기';
+  return '예) ' + ((st.conds || [])[0]?.label || '비가 오나요?');
+}
+function insert(type) {
+  if (running) return;
+  const a = cur.active;
+  if (type === 'terminal' && a.owner !== null) { toast('시작/끝 기호는 맨 바깥 줄에만 놓을 수 있어요.'); return; }
+  const list = listOf(a);
+  const n = { id: uid++, type, text: '', ph: placeholder(type) };
+  if (type === 'repeat') n.body = [];
+  if (type === 'decision') { n.yes = []; n.no = []; }
+  const idx = Math.min(a.index, list.length);
+  list.splice(idx, 0, n);
+  if (type === 'repeat') cur.active = { owner: n.id, branch: 'body', index: 0 };
+  else if (type === 'decision') cur.active = { owner: n.id, branch: 'yes', index: 0 };
+  else cur.active = { owner: a.owner, branch: a.branch, index: idx + 1 };
+  cur.focus = n.id;
+  clearMarks(); renderFlow(); save();
+  const inp = $('in-' + n.id); if (inp) inp.focus();
+  if (cur.st.tedium && !feat(cur.no).repeat && countNodes(cur.program).proc >= 6) setTimeout(needRepeat, 300);
+}
+function renderFlow() {
+  const host = $('flow'); const sc = host.scrollLeft;
+  host.innerHTML = ''; host.append(renderList(cur.program, { active: cur.active }, null, 'root'));
+  host.scrollLeft = sc;
+  const c = countNodes(cur.program), f = feat(cur.no), cnt = $('count');
+  const lim = cur.st.limit && f.repeat;
+  cnt.textContent = `기호 ${c.all}개` + (lim ? ` · 처리 기호 ${c.proc}/${cur.st.limit}` : '');
+  cnt.className = 'count' + (lim && c.proc > cur.st.limit ? ' over' : '');
+  renderChips();
+}
+$('flow').addEventListener('click', e => {
+  if (running) return;
+  const s = e.target.closest('.slot');
+  if (s) { cur.active = { owner: s.dataset.owner === '' ? null : +s.dataset.owner, branch: s.dataset.branch, index: +s.dataset.index }; renderFlow(); const again = $('flow').querySelector('.slot.active'); again && again.focus(); return; }
+  const t = e.target.closest('button[data-act]');
+  if (!t) return;
+  const id = +t.dataset.id, f = find(id); if (!f) return;
+  if (t.dataset.act === 'del') {
+    f.list.splice(f.index, 1);
+    const a = cur.active;
+    if (a.owner !== null && (a.owner === id || contains(f.node, a.owner))) cur.active = { owner: null, branch: 'root', index: cur.program.length };
+    else if (listOf(a) === f.list && a.index > f.index) a.index--;
+    if (cur.focus === id) cur.focus = null;
+  } else {
+    const j = f.index + (t.dataset.act === 'up' ? -1 : 1);
+    if (j < 0 || j >= f.list.length) return;
+    [f.list[f.index], f.list[j]] = [f.list[j], f.list[f.index]];
+  }
+  clearMarks(); renderFlow(); save();
+});
+$('flow').addEventListener('input', e => { const f = find(+e.target.dataset.id); if (f) { f.node.text = e.target.value; e.target.closest('.node').classList.remove('error'); save(); } });
+$('flow').addEventListener('focusin', e => { if (e.target.tagName === 'INPUT') { cur.focus = +e.target.dataset.id; renderChips(); } });
+
+function clearMarks() { document.querySelectorAll('#flow .node.error, #flow .node.running').forEach(n => n.classList.remove('error', 'running')); }
+function mark(node, cls) {
+  document.querySelectorAll('#flow .node.' + cls).forEach(n => n.classList.remove(cls));
+  if (!node) return;
+  const el = document.querySelector(`#flow .node[data-id="${node.id}"]`);
+  if (el) { el.classList.add(cls); if (cls === 'error') el.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
+}
+function say(msg, kind = '') { const b = $('say'); b.textContent = msg; b.className = 'bubble' + (kind ? ' ' + kind : ''); }
+function updateAttempts() { const w = progress.wrong[cur.no] || 0; $('attempts').textContent = w ? `틀린 횟수 ${w}번` : '아직 틀린 적 없어요'; }
+function renderHints() {
+  const w = progress.wrong[cur.no] || 0, teach = progress.teacher, shown = teach ? 3 : Math.min(3, Math.max(progress.hints[cur.no] || 0, w - 1));
+  if (!teach) progress.hints[cur.no] = shown;
+  $('teacher-box').hidden = !teach;
+  if (teach) $('teacher-ans').innerHTML = ansLines(cur.st.solution, 0).join('');
+  $('hint-intro').textContent = shown ? '' : '두 번 틀리면 힌트가 자동으로 나타나요. 힌트가 필요하면 아래 버튼을 눌러요.';
+  $('hint-list').innerHTML = cur.st.hints.slice(0, shown).map((h, i) => `<li><b style="font-family:var(--f-display);font-weight:400">${['생각 힌트', '구조 힌트', '거의 정답'][i]}</b> · ${esc(h)}</li>`).join('');
+  $('hint-more').hidden = shown >= 3;
+  $('show-answer').hidden = w < 5 && !teach;
+}
+const KTAG = { terminal: '시작/끝', process: '처리', repeat: '반복', decision: '판단' };
+function ansLines(list, d) {
+  const pad = n => `style="padding-left:${n * 22}px"`, out = [];
+  list.forEach(n => {
+    out.push(`<div class="a k-${n.type}" ${pad(d)}><i>${KTAG[n.type]}</i>${esc(n.text)}</div>`);
+    if (n.type === 'repeat') out.push(...ansLines(n.body, d + 1));
+    if (n.type === 'decision') ['yes', 'no'].forEach(k => {
+      out.push(`<div class="a k-${k}" ${pad(d + 1)}>${k === 'yes' ? '예 →' : '아니오 →'}${n[k].length ? '' : ' <span style="color:var(--ink-soft);font-family:var(--f-body)">(할 일 없음)</span>'}</div>`);
+      out.push(...ansLines(n[k], d + 2));
+    });
+  });
+  return out;
+}
+$('hint-more').onclick = () => { progress.hints[cur.no] = Math.min(3, (progress.hints[cur.no] || 0) + 1); renderHints(); save(); };
+$('show-answer').onclick = () => modal('모범 답안을 불러올까요?', '<p>지금 만든 순서도는 지워지고, 모범 답안이 작업판에 들어가요. 불러온 뒤 ▶ 실행으로 토리가 어떻게 하는지 살펴보세요.</p>',
+  [{ label: '그만두기' }, { label: '불러오기', primary: true, on: () => { unlockAll(); cur.program = withIds(cur.st.solution); cur.active = { owner: null, branch: 'root', index: cur.program.length }; cur.usedAnswer = true; clearMarks(); renderPalette(); renderFlow(); save(); say('모범 답안을 불러왔어요. 한 기호씩 읽어 보고 ▶ 실행해 보세요.'); } }]);
+function unlockAll() { if (cur.no === 2) progress.got.repeat = true; if (cur.no === 3) progress.got.decision = true; }
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const delay = () => [0, 750, 450, 180][+$('speed').value];
+function setRunning(v) {
+  running = v; $('run').disabled = v; $('stop').disabled = !v; $('reset-scene').disabled = v; $('clear').disabled = v;
+  document.querySelectorAll('#palette .pal-btn').forEach(b => { if (v) b.dataset.was = b.disabled; b.disabled = v ? true : b.dataset.was === 'true'; });
+  renderVariantTabs();
+}
+async function runOne(vi) {
+  cur.variant = vi; renderVariantTabs(); resetScene();
+  await sleep(300);
+  const s = cur.sim, g = exec(cur.program, s, cur.st, true); let k = 0;
+  while (true) {
+    if (stopReq) return { stopped: true };
+    const r = g.next();
+    if (r.done) return { ok: false, msg: '순서도가 중간에 멈췄어요.' };
+    const ev = r.value; mark(ev.node, 'running');
+    if (++k > MAX_EVENTS) return { ok: false, node: ev.node, msg: '반복이 끝나지 않아요. 같은 일을 끝없이 하고 있어요.' };
+    const res = step(ev, s, cur.st);
+    if (ev.cmd) { drawScene(res.done && !res.ok); say('토리: ' + ev.node.text); }
+    if (ev.cond !== undefined) say(`‘${ev.node.text}’ → ${ev.cond ? '예' : '아니오'}`);
+    if (res.done) { await sleep(500); return { ok: res.ok, msg: res.msg, node: res.ok ? null : ev.node }; }
+    await sleep(ev.cmd ? delay() : delay() * .6);
+  }
+}
+$('run').onclick = async () => {
+  if (running) return;
+  clearMarks();
+  const v = validate(cur.program, cur.no);
+  if (!v.ok) { if (v.node) mark(v.node, 'error'); if (v.counts) { fail(v.msg, null); return; } say(v.msg, 'bad'); return; }
+  setRunning(true); stopReq = false;
+  let res; const vs = cur.st.variants;
+  for (let i = 0; i < vs.length; i++) {
+    if (vs.length > 1) say(`${vs[i].label}: 시작해 볼게요!`);
+    res = await runOne(i);
+    if (!res.ok) { if (vs.length > 1 && !res.stopped) res.msg = `${vs[i].label}에서: ${res.msg}`; break; }
+  }
+  setRunning(false); mark(null, 'running');
+  if (res.stopped) { say('멈췄어요. 순서도를 고친 뒤 다시 실행해 보세요.'); return; }
+  if (!res.ok) {
+    fail(res.msg, res.node);
+    if (cur.st.choose && !feat(cur.no).decision && countNodes(cur.program).dec === 0) setTimeout(needDecision, 900);
+    return;
+  }
+  win();
+};
+$('stop').onclick = () => { stopReq = true; };
+$('reset-scene').onclick = () => { if (!running) { resetScene(); clearMarks(); say('처음 상태로 돌아왔어요.'); } };
+$('clear').onclick = () => {
+  if (running || !cur.program.length) return;
+  const b = $('clear');
+  if (b.dataset.confirm) { cur.program = []; cur.active = { owner: null, branch: 'root', index: 0 }; cur.focus = null; delete b.dataset.confirm; b.textContent = '모두 지우기'; renderFlow(); save(); return; }
+  b.dataset.confirm = '1'; b.textContent = '정말 지울까요? 한 번 더 누르기';
+  setTimeout(() => { delete b.dataset.confirm; b.textContent = '모두 지우기'; }, 3000);
+};
+function fail(msg, node) {
+  progress.wrong[cur.no] = (progress.wrong[cur.no] || 0) + 1;
+  const w = progress.wrong[cur.no];
+  if (node) mark(node, 'error');
+  const extra = w === 2 ? ' 힌트가 하나 열렸어요!' : w === 3 ? ' 두 번째 힌트가 열렸어요.' : w === 4 ? ' 거의 정답 힌트가 열렸어요.' : w === 5 ? ' 모범 답안을 볼 수 있어요.' : '';
+  say(msg + (node ? ' 빨간 점선 기호를 살펴보세요.' : '') + extra, 'bad');
+  renderHints(); updateAttempts(); save();
+}
+function needRepeat() {
+  if (feat(cur.no).repeat) return;
+  const c = countNodes(cur.program).proc;
+  modal('같은 일을 계속 적고 있어요!', `<p>벌써 처리 기호를 <b>${c}개</b>나 썼어요. 화분이 10개라서 이렇게 적으면 처리 기호가 20개도 넘게 필요해요.</p><div class="longlist">화분에 물 주기 → 다음 화분으로 가기 → 화분에 물 주기 → 다음 화분으로 가기 → 화분에 물 주기 → … (10번)</div><p style="margin-top:10px">화분이 100개라면 어떨까요? 같은 일을 여러 번 할 때 짧게 쓰는 방법이 필요해요.</p>`
+    + gift('repeat', '<b>반복 기호를 얻었어요!</b> 육각형에 몇 번 반복할지 적고, 그 아래 ‘반복할 일’ 칸에 되풀이할 일을 넣어요. 이제 처리 기호는 3개까지만 쓸 수 있어요.'),
+    [{ label: '반복 기호 써 보기', primary: true, on: () => { progress.got.repeat = true; save(); renderPalette(); renderFlow(); say('반복 기호가 열렸어요! 되풀이되는 처리 기호들을 반복 기호 안으로 옮겨 보세요.'); } }]);
+}
+function needDecision() {
+  modal('날씨가 날마다 달라요!', `<div class="pair" style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:6px 0 10px"><div class="window">${I.rain}<b>월요일</b></div><div class="window">${I.sun}<b>화요일</b></div></div><p>차례대로만 적은 순서도는 언제나 똑같이 움직여요. 그래서 비 오는 날과 맑은 날 중 한 날에만 맞게 준비할 수 있어요.</p><p>상황을 보고 할 일을 고르는 방법이 필요해요.</p>`
+    + gift('decision', '<b>판단 기호를 얻었어요!</b> 마름모에 ‘비가 오나요?’처럼 질문을 적으면, 답에 따라 예 쪽 또는 아니오 쪽 일을 해요.'),
+    [{ label: '판단 기호 써 보기', primary: true, on: () => { progress.got.decision = true; save(); renderPalette(); say('판단 기호가 열렸어요! 날씨에 따라 다른 일을 예/아니오 쪽에 넣어 보세요.'); } }]);
+}
+function win() {
+  const no_ = cur.no, w = progress.wrong[no_] || 0, c = countNodes(cur.program).all, model = countNodes(cur.st.solution).all;
+  let stars = 1; if (w <= 2) stars++; if (c <= model) stars++;
+  if (cur.usedAnswer) stars = 1;
+  progress.stars[no_] = Math.max(progress.stars[no_] || 0, stars);
+  progress.unlocked = Math.max(progress.unlocked, Math.min(STAGES.length, no_ + 1));
+  save();
+  say(cur.st.variants.length > 1 ? '모든 경우를 해냈어요!' : '성공!', 'ok');
+  const why = ['성공 ★', w <= 2 ? '두 번 이내로 틀림 ★' : '두 번 이내로 틀림 ☆', c <= model ? `기호 ${model}개 이하로 완성 ★` : `기호 ${model}개 이하로 완성 ☆ (지금 ${c}개)`];
+  const starsHtml = `<div class="big-stars">${STAR(stars >= 1)}${STAR(stars >= 2)}${STAR(stars >= 3)}</div><p style="text-align:center;color:var(--ink-soft);font-size:14px">${cur.usedAnswer ? '모범 답안을 불러와서 별 1개예요. 다음에 혼자 도전해 봐요!' : why.join(' · ')}</p>`;
+  const learned = { 1: '차례대로 한 번씩 하는 <b>순차</b> 구조를 썼어요. 순서가 바뀌면 일이 잘못된다는 것도 확인했어요.', 2: '같은 일을 되풀이하는 <b>반복</b> 구조로 순서도를 짧게 만들었어요.', 3: '상황에 따라 할 일을 고르는 <b>선택</b> 구조를 썼어요.', 4: '<b>반복</b> 안에 <b>선택</b>을 넣어서 문제마다 다르게 채점했어요.', 5: '<b>순차·반복·선택</b>을 모두 써서 분리수거 순서도를 완성했어요!' }[no_];
+  if (no_ === STAGES.length) {
+    const total = Object.values(progress.stars).reduce((a, b) => a + b, 0);
+    modal('순서도 생활 박사가 되었어요!', starsHtml + `<p>${learned}</p><p>다섯 가지 상황을 모두 순서도로 나타냈어요. 모은 별은 <b>${total}개 / ${STAGES.length * 3}개</b>예요.</p><p>이제 우리 집에서 하는 다른 일도 순서도로 그려 볼 수 있겠죠?</p>`, [{ label: '상황 고르기', on: () => show('map') }, { label: '다시 해 보기', primary: true }]);
+    return;
+  }
+  modal(`상황 ${no_} 성공!`, starsHtml + `<p>${learned}</p>`, [{ label: '상황 고르기', on: () => show('map') }, { label: '다음 상황 →', primary: true, on: () => startStage(no_ + 1) }]);
+}
+
+function show(name) {
+  ['intro', 'map', 'play'].forEach(s => $('screen-' + s).hidden = s !== name);
+  if (name === 'map') mapInit();
+  if (name !== 'play') stopReq = true;
+  window.scrollTo(0, 0);
+}
+$('nav-intro').onclick = () => show('intro');
+$('nav-map').onclick = () => show('map');
+$('go-map').onclick = () => show('map');
+$('back-map').onclick = () => show('map');
+$('teacher').onclick = () => { progress.teacher = !progress.teacher; save(); mapInit(); toast(progress.teacher ? '모든 상황이 열렸어요.' : '선생님 모드를 껐어요.'); };
+$('reset').onclick = () => modal('기록을 지울까요?', '<p>별, 상황 기록, 만든 순서도가 모두 지워져요. 되돌릴 수 없어요.</p>', [{ label: '그만두기' }, { label: '모두 지우기', primary: true, on: () => { progress = blank(); try { localStorage.removeItem(KEY); } catch (e) {} mapInit(); toast('기록을 지웠어요.'); } }]);
+$('modal').addEventListener('click', e => { if (e.target === $('modal')) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('modal').hidden) closeModal(); });
+
+introInit();
+
+window.__life = { STAGES, progress: () => progress, run(no_, list, unlock = true) {
+  if (unlock) { progress.got.repeat = true; progress.got.decision = true; }
+  const st = STAGES[no_ - 1], pr = withIds(list), v = validate(pr, no_);
+  if (!v.ok) return 'invalid: ' + v.msg;
+  return st.variants.map(vr => { const r = stepAll(pr, vr.init(), st); return r.ok ? 'ok' : r.msg; });
+} };
+})();
+</script>
+</body>
+</html>
